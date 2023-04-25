@@ -3,6 +3,8 @@ package Hard;
 public class WildcardMatching {
 
     public boolean isMatch(String s, String p) {
+        // time limitation fail
+
         int index = 0;
         StringBuilder sb = new StringBuilder("");
         p = p.replaceAll("\\*{1,}","\\*");
