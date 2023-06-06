@@ -6,8 +6,6 @@ import java.util.List;
 public class WordBreak {
     public boolean wordBreak(String s, List<String> wordDict) {
         boolean[] dp = new boolean[s.length()];
-        HashSet<String> hs = new HashSet<>();
-        for(String st:wordDict) hs.add(st);
         for(int i=0; i<s.length(); i++){
             for(int j =0; j<wordDict.size(); j++){
                 String st = wordDict.get(j);
