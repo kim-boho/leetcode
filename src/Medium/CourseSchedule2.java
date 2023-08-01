@@ -3,68 +3,61 @@ package Medium;
 import java.util.ArrayList;
 
 public class CourseSchedule2 {
-    // not for multiple pres
-    boolean isDone = false;
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        int[] ans = new int[numCourses];
-        if(prerequisites.length == 0){
-            for(int i=0; i<numCourses; i++) ans[i] = i;
-            return ans;
-        }
+        boolean[] taken = new boolean[numCourses];
         boolean[] needPre = new boolean[numCourses];
-        boolean[] checked = new boolean[numCourses];
-        ArrayList<Integer>[] li = new ArrayList[numCourses];
+        ArrayList<Integer>[] pres = new ArrayList[numCourses];
 
-        for(int i=0; i<li.length; i++){
-            li[i] = new ArrayList<>();
+        for(int i=0; i<numCourses; i++){
+            ArrayList<Integer> pre = new ArrayList<>();
+            pres[i] = pre;
         }
 
         for(int i=0; i<prerequisites.length; i++){
             int course = prerequisites[i][0];
             int pre = prerequisites[i][1];
             needPre[course] = true;
-            li[pre].add(course);
+            pres[course].add(pre);
         }
 
         ArrayList<Integer> order = new ArrayList<>();
         for(int i=0; i<numCourses; i++){
-            if(!needPre[i] && li[i].size()==0) order.add(i);
+            if(!needPre[i]){
+                order.add(i);
+                taken[i] = true;
+            }
         }
-        dfs(numCourses, needPre, checked, li, ans, order);
-        if(isDone) return ans;
-        else{
-            ans = new int[0];
-            return ans;
-        }
-
+        int[] ans = new int[numCourses];
+        ans[0] = -1;
+        int[] dummy = new int[0];
+        dfs(numCourses, taken, order, pres, ans);
+        return ans[0] != -1? ans:dummy;
     }
 
-    public void dfs(int numCourses, boolean[] needPre, boolean[] checked, ArrayList<Integer>[] li, int[] ans, ArrayList<Integer> order){
+    private void dfs(int numCourses, boolean[] taken, ArrayList<Integer> order, ArrayList<Integer>[] pres, int[] ans){
         if(order.size() == numCourses){
-            for(int i=0; i<order.size(); i++){
+            for(int i=0; i<ans.length; i++){
                 ans[i] = order.get(i);
-                isDone = true;
             }
             return;
         }
-        for(int i=0; i<checked.length; i++){
-            if(!isDone && !checked[i] && !needPre[i]){
-                checked[i] = true;
-                order.add(i);
-                if(order.size() == numCourses) dfs(numCourses, needPre, checked, li, ans, order);
-                if(li[i].size() != 0){
-                    for(int j=0; !isDone && j<li[i].size(); j++){
-                        int next = li[i].get(j);
-                        needPre[next] = false;
+
+        for(int i=0; i<numCourses; i++){
+            if(!taken[i]){
+                ArrayList<Integer> tempPres = pres[i];
+                boolean canTaken = true;
+                for(int j=0; j<tempPres.size(); j++){
+                    if(!taken[tempPres.get(j)]){
+                        canTaken = false;
+                        break;
                     }
-                    dfs(numCourses, needPre, checked, li, ans, order);
-                    for(int j=0; !isDone && j<li[i].size(); j++){
-                        int next = li[i].get(j);
-                        needPre[next] = true;
-                    }
-                } else continue;
-                order.remove(order.size()-1);
-                checked[i] = false;
+                }
+                if(canTaken){
+                    order.add(i);
+                    taken[i] = true;
+                    dfs(numCourses, taken, order, pres, ans);
+                    order.remove(order.size()-1);
+                }
             }
         }
     }
