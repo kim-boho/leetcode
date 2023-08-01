@@ -3,6 +3,7 @@ package Medium;
 import java.util.ArrayList;
 
 public class CourseSchedule2 {
+    // not for multiple pres
     boolean isDone = false;
     public int[] findOrder(int numCourses, int[][] prerequisites) {
         int[] ans = new int[numCourses];
@@ -26,6 +27,9 @@ public class CourseSchedule2 {
         }
 
         ArrayList<Integer> order = new ArrayList<>();
+        for(int i=0; i<numCourses; i++){
+            if(!needPre[i] && li[i].size()==0) order.add(i);
+        }
         dfs(numCourses, needPre, checked, li, ans, order);
         if(isDone) return ans;
         else{
@@ -58,7 +62,7 @@ public class CourseSchedule2 {
                         int next = li[i].get(j);
                         needPre[next] = true;
                     }
-                }
+                } else continue;
                 order.remove(order.size()-1);
                 checked[i] = false;
             }
