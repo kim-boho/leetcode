@@ -5,14 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 
 public class PalindromePairs {
-    // not finished yet, just idea
+    // time limit exceeded
     public List<List<Integer>> palindromePairs(String[] words) {
         HashMap<Integer, List<String>> listWithLen = new HashMap<>();
         HashMap<String,Integer> wordWithIdx = new HashMap<>();
         List<List<Integer>> ans = new ArrayList<>();
 
         for(int i=0; i<words.length; i++){
-            wordWithIdx.put(words[i], words[i].length());
+            wordWithIdx.put(words[i], i);
             if(listWithLen.containsKey(words[i].length())){
                 listWithLen.get(words[i].length()).add(words[i]);
             } else{
@@ -24,13 +24,12 @@ public class PalindromePairs {
 
         for(int i=0; i<words.length; i++){
             String word = words[i];
-            String reverse = new StringBuilder(word).reverse().toString();
-
             for(Integer len: listWithLen.keySet()){
                 List<String> temp = listWithLen.get(len);
                 if(len == 0){
                     for(int j=0; j<temp.size(); j++){
                         String word2 = temp.get(j);
+                        System.out.println("ZERO WORD ADDING: "+word +", ZERO"+word2);
                         if(word.equals(word2)) continue;
                         if(isPalindrome(word)) add(word, word2, ans, wordWithIdx);
                     }
@@ -38,12 +37,12 @@ public class PalindromePairs {
                     for(int j=0; j<temp.size(); j++){
                         String word2 = temp.get(j);
                         if(word.equals(word2)) continue;
+                        String reverse = new StringBuilder(word).reverse().toString();
                         if(reverse.equals(word2)) add(word, word2, ans, wordWithIdx);
                     }
                 } else if(len < word.length()){
                     String remaining = word.substring(len, word.length());
                     if(!isPalindrome(remaining)) continue;
-
                     String front = word.substring(0, len);
                     String reversedFront = new StringBuilder(front).reverse().toString();
 
@@ -59,7 +58,7 @@ public class PalindromePairs {
                         String remaining2 = word2.substring(0, len - word.length());
                         if(!isPalindrome(remaining2)) continue;
 
-                        String back = word2.substring(0, len-word.length());
+                        String back = word2.substring(remaining2.length(), len);
                         String reversedBack = new StringBuilder(back).reverse().toString();
                         if(reversedBack.equals(word)) add(word, word2, ans, wordWithIdx);
                     }
