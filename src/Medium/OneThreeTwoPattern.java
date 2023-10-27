@@ -10,13 +10,13 @@ public class OneThreeTwoPattern {
             minArr[i] = Math.min(nums[i], minArr[i-1]);
         }
 
-        Stack<Integer> st = new Stack();
+        Stack<Integer> st = new Stack<>();
         for(int i=nums.length-1; i>=0; i--){
             if(nums[i]>minArr[i]){
-                while(st.size()>0 && st.peek()<=minArr[i]){
+                while(!st.isEmpty() && st.peek()<=minArr[i]){
                     st.pop();
                 }
-                if(st.size()>0 && st.peek()<nums[i]) return true;
+                if(!st.isEmpty() && st.peek()<nums[i]) return true;
                 st.add(nums[i]);
             }
         }
