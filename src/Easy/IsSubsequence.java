@@ -6,7 +6,7 @@ public class IsSubsequence {
         int i = 0;
         int j = 0;
         while(i < s.length() && j < t.length()){
-            while(i < s.length() && j < t.length() && s.charAt(i) != t.charAt(j)) j++;
+            while(j < t.length() && s.charAt(i) != t.charAt(j)) j++;
             if(j < t.length()){
                 i++;
                 j++;
