@@ -28,10 +28,6 @@ public class MapSumPairs {
     }
 
     public int sum(String prefix) {
-        if(hm.containsKey(prefix)){
-            return hm.get(prefix);
-        } else{
-            return 0;
-        }
+        return hm.getOrDefault(prefix, 0);
     }
 }
