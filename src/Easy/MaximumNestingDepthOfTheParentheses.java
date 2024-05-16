@@ -1,14 +1,15 @@
 package Easy;
 
 public class MaximumNestingDepthOfTheParentheses {
-    public int getCommon(int[] nums1, int[] nums2) {
-        int i = 0;
-        int j = 0;
-        while(i < nums1.length && j < nums2.length){
-            if(nums1[i] == nums2[j]) return nums1[i];
-            else if(nums1[i] < nums2[j]) i++;
-            else j++;
+    public int maxDepth(String s) {
+        int left = 0;
+        int ans = 0;
+        char[] arr = s.toCharArray();
+        for(char c:arr){
+            if(c=='(') left++;
+            else if(c==')') left--;
+            ans = Math.max(left, ans);
         }
-        return -1;
+        return ans;
     }
 }
