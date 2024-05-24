@@ -17,16 +17,16 @@ public class MaximumScoreWordsFormedByLetters {
     private int canMakeWord(char[] occ, char[] ableChars, int[] score){
         int sum = 0;
         for(int i=0; i<26; i++){
-            if(occ[i] > ableChars[i]) return 0;
-            else sum += (occ[i]*score[i]);
+            if(occ[i] > ableChars[i]){
+                for(int j=0; j<i; j++) ableChars[j] += occ[j];
+                return 0;
+            }
+            else {
+                sum += (occ[i]*score[i]);
+                ableChars[i] -= occ[i];
+            }
         }
         return sum;
-    }
-
-    private void removeChars(char[] occ, char[] ableChars){
-        for(int i=0; i<26; i++){
-            ableChars[i] -= occ[i];
-        }
     }
 
     private void addCharsAgain(char[] occ, char[] ableChars){
@@ -42,7 +42,6 @@ public class MaximumScoreWordsFormedByLetters {
         }
         int addedScore = canMakeWord(occurences[i],ableChars,score);
         if(addedScore > 0){
-            removeChars(occurences[i],ableChars);
             addWords(i+1, s+addedScore, ableChars, occurences,score);
             addCharsAgain(occurences[i],ableChars);
         }
