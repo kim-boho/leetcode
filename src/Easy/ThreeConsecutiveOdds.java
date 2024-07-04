@@ -1,3 +1,5 @@
+package Easy;
+
 public class ThreeConsecutiveOdds {
     public boolean threeConsecutiveOdds(int[] arr) {
         int cons = 0;
