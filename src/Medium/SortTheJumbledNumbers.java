@@ -1,6 +1,7 @@
 package Medium;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class SortTheJumbledNumbers {
     public int[] sortJumbled(int[] mapping, int[] nums) {
@@ -22,7 +23,7 @@ public class SortTheJumbledNumbers {
             arr[i][1] = i;
             arr[i][0] = n;
         }
-        Arrays.sort(arr, (a, b) -> Integer.compare(a[0], b[0]));
+        Arrays.sort(arr, Comparator.comparingInt(a -> a[0]));
         for(int i=0; i<ans.length; i++){
             ans[i] = nums[arr[i][1]];
         }
