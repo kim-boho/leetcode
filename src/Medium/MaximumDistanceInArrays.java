@@ -5,27 +5,49 @@ import java.util.List;
 
 public class MaximumDistanceInArrays {
     public int maxDistance(List<List<Integer>> arrays) {
-        int[] nums = new int[arrays.size()*2];
-        for(int i=0; i<arrays.size(); i++){
-            int min = arrays.get(i).get(0);
-            int max = arrays.get(i).get(arrays.get(i).size()-1);
-            nums[i*2] = min;
-            nums[i*2+1] = max;
+        int min1 = arrays.get(0).get(0);
+        int min2 = arrays.get(1).get(0);
+        if(min1>min2){
+            int temp = min1;
+            min1 = min2;
+            min2 = temp;
         }
-        Arrays.sort(nums);
+        int max1 = arrays.get(0).get(arrays.get(0).size()-1);
+        int max2 = arrays.get(1).get(arrays.get(1).size()-1);
+        if(max1>max2){
+            int temp = max1;
+            max1 = max2;
+            max2 = temp;
+        }
+
+        for(int i=2; i<arrays.size(); i++){
+            List<Integer> li = arrays.get(i);
+            int min = li.get(0);
+            int max = li.get(li.size()-1);
+            if(min < min1){
+                min2 = min1;
+                min1 = min;
+            } else if(min<min2){
+                min2 = min;
+            }
+            if(max > max2){
+                max2 = max1;
+                max1 = max;
+            } else if(max>max1){
+                max1 = max;
+            }
+        }
+
         int ans = 0;
-        int lastIdx = nums.length-1;
-        for (List<Integer> array : arrays) {
-            int min = array.get(0);
-            int max = array.get(array.size() - 1);
-            if (max == nums[lastIdx]) {
-                ans = Math.max(ans, Math.abs(min - nums[lastIdx - 1]));
-            } else ans = Math.max(ans, Math.abs(min - nums[lastIdx]));
-
-            if (min == nums[0]) {
-                ans = Math.max(ans, Math.abs(max - nums[1]));
-            } else ans = Math.max(ans, Math.abs(max - nums[0]));
-
+        for(List<Integer> li: arrays){
+            int min = li.get(0);
+            int max = li.get(li.size()-1);
+            if(max == max2){
+                ans = Math.max(ans,max1-min);
+            } else ans = Math.max(ans,max2-min);
+            if(min == min1){
+                ans = Math.max(ans,max-min2);
+            } else ans = Math.max(ans,max-min1);
         }
 
         return ans;
