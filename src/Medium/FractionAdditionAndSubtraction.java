@@ -18,8 +18,8 @@ public class FractionAdditionAndSubtraction {
         for(; i<arr.length; i++){
             String frac = arr[i];
             String[] nums = frac.split("/");
-            int times = 2520/Integer.valueOf(nums[1]);
-            int nume = times*Integer.valueOf(nums[0]);
+            int times = 2520/Integer.parseInt(nums[1]);
+            int nume = times*Integer.parseInt(nums[0]);
             if(li.get(j++) == '-') nume *= -1;
             numes.add(nume);
         }
