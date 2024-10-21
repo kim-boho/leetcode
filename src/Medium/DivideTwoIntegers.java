@@ -72,4 +72,37 @@ public class DivideTwoIntegers {
 
 
     }
+
+    public int divide3(int dividend, int divisor) {
+        if(dividend == 0) return 0;
+        boolean isPos = true;
+        if((dividend < 0 && divisor > 0) || (dividend > 0 && divisor < 0)) isPos = false;
+        int ans = 0;
+
+        if(divisor == -2147483648){
+            if(dividend == -2147483648) return 1;
+            else return 0;
+        }
+        if(divisor == 1) return dividend;
+        if(divisor == -1){
+            if(dividend == -2147483648) return 2147483647;
+            else return -dividend;
+        }
+
+        int leftDividend = 0;
+        if(dividend == -2147483648){
+            leftDividend++;
+            dividend++;
+        }
+
+        dividend = Math.abs(dividend);
+        divisor = Math.abs(divisor);
+        while(dividend >= divisor){
+            dividend -= divisor;
+            ans++;
+            if(ans == 2147483647) return isPos? ans:-ans;
+        }
+        if(leftDividend == 1 && (dividend+1) >= divisor) ans++;
+        return isPos? ans:-ans;
+    }
 }
