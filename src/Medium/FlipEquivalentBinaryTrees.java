@@ -24,11 +24,11 @@ public class FlipEquivalentBinaryTrees {
         if(count1 != count2) return false;
         else{
             if(count1 == 2){
-                if(n1Left.val == n2Left.val && n1Right.val == n2Right.val){
+                if(n1Left.val == n2Left.val){
                     return checkNodes(n1Left,n2Left) && checkNodes(n1Right,n2Right);
-                } else if(n1Left.val == n2Right.val && n1Right.val == n2Left.val){
+                } else {
                     return checkNodes(n1Left,n2Right) && checkNodes(n1Right,n2Left);
-                } else return false;
+                }
             } else if(count1 == 1){
                 TreeNode temp1 = n1Left;
                 if(n1Left == null) temp1 = n1Right;
