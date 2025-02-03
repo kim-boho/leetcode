@@ -9,16 +9,19 @@ public class MaximumTwinSumOfALinkedList {
         int i = 0;
         ListNode p = head;
         ListNode jump = head.next;
-        Stack<Integer> st = new Stack<>();
+        ListNode prev = null;
         while(jump != null){
-            st.add(p.val);
+            ListNode temp = p.next;
+            p.next = prev;
+            prev = p;
+            p = temp;
             if(jump.next == null) break;
-            p = p.next;
             jump = jump.next.next;
         }
-        p = p.next;
+
         while(p != null){
-            ans = Math.max(ans,st.pop()+p.val);
+            ans = Math.max(ans,prev.val+p.val);
+            prev = prev.next;
             p = p.next;
         }
         return ans;
