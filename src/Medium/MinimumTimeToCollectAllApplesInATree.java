@@ -60,4 +60,28 @@ public class MinimumTimeToCollectAllApplesInATree {
             else return sum+2;
         }
     }
+
+    public int minTime2(int n, int[][] edges, List<Boolean> hasApple) {
+        if(edges.length == 0) return 0;
+        ArrayList<Integer>[] tree = new ArrayList[n];
+        for(int i=0; i<n; i++) tree[i] = new ArrayList<>();
+        for(int[] e:edges){
+            tree[e[0]].add(e[1]);
+            tree[e[1]].add(e[0]);
+        }
+        return calculateDist(0,-1,tree,hasApple);
+    }
+
+    private int calculateDist(int node, int parent, ArrayList<Integer>[] tree, List<Boolean> hasApple) {
+        int sum = 0;
+        for (int ch : tree[node]) {
+            if (ch != parent) {
+                sum += calculateDist(ch, node, tree, hasApple);
+            }
+        }
+        if (sum == 0 && !hasApple.get(node)) return 0;
+        else {
+            return node == 0 ? sum : sum + 2;
+        }
+    }
 }
