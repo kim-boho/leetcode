@@ -1,24 +1,15 @@
 package Easy;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 
 public class MinimumSumOfFourDigitNumberAfterSplittingDigits {
     public int minimumSum(int num) {
-        ArrayList<Integer> li = new ArrayList<>();
+        int[] arr = new int[4];
         for(int i=0; i<4; i++){
-            int n = num%10;
-            if(n != 0) li.add(n);
+            arr[i] = num%10;
             num /= 10;
         }
-        if(li.size() == 1) return li.get(0);
-        else if(li.size() == 2) return li.get(0)+li.get(1);
-        else if(li.size() == 3){
-            Collections.sort(li);
-            return li.get(0)*10+li.get(1)+li.get(2);
-        } else{
-            Collections.sort(li);
-            return li.get(0)*10+li.get(1)*10+li.get(2)+li.get(3);
-        }
+        Arrays.sort(arr);
+        return arr[0]*10+arr[1]*10+arr[2]+arr[3];
     }
 }
