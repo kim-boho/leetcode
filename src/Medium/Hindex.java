@@ -4,15 +4,22 @@ import java.util.Arrays;
 
 public class Hindex {
     public int hIndex(int[] citations) {
-        Arrays.sort(citations);
-        int hIndex = 0;
-        for(int i=citations.length-1; i>=0; i--){
-            if(citations[i] < hIndex+1){
-                break;
+        int[] citationCount = new int[citations.length+1];
+        for(int citation : citations){
+            if(citation >= citations.length){
+                citationCount[citations.length]++;
             } else{
-                hIndex++;
+                citationCount[citation]++;
             }
         }
-        return hIndex;
+        int maxHIndex = citations.length;
+        int citatedPapers = 0;
+        for(; maxHIndex > 0; maxHIndex--){
+            citatedPapers += citationCount[maxHIndex];
+            if(maxHIndex <= citatedPapers){
+                return maxHIndex;
+            }
+        }
+        return maxHIndex;
     }
 }
