@@ -1,4 +1,6 @@
-package Medium;
+package Easy;
+
+import Medium.TreeNode;
 
 public class UnivaluedBinaryTree {
     public boolean isUnivalTree(TreeNode root) {
